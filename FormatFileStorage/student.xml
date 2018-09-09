@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<student score="good" desc="A normal student">
+    <name>LILEI</name>
+    <age>18</age>
+    <sex>male</sex>
+
+    <classmate decs="a bad temper student" score="great">一号人物
+        <name>HANMEIMEI</name>
+        <sex>female</sex>
+        <age>17</age>
+        <relationship>lover</relationship>
+
+    </classmate>
+
+    <classmate decs="a good student" score="good" other="班长">二号人物
+        <name>ZHAOSI</name>
+        <sex>male</sex>
+        <age>17</age>
+        <relationship>deskmate</relationship>
+    </classmate>
+
+    <hobby>大概就是下面这些
+        <football>normal</football>
+
+        <dancing>excellent</dancing>
+
+        <videogame>well</videogame>
+    </hobby>
+    <!--一个瞎写的例子-->
+</student>
