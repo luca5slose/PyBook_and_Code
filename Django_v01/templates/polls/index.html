@@ -1,0 +1,13 @@
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+     <!-- 这是硬编码，紧耦合的方式，问题在于在修改多个模板文件的urls时很麻烦，但是我们本身在urls函数中定义了name参数.-->
+     <!-- 所以可以通过使用下面的模板标签来移除对URL配置中定义的特定的URL的依赖,之后修改只需要修改url函数里的就行了 -->
+     <!-- <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li> -->
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
