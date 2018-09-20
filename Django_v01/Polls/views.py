@@ -5,6 +5,7 @@ from django.views import generic
 from django.template import loader
 from django.http import Http404
 from django.urls import reverse
+from django.utils import timezone
 # Create your views here.
 
 '''
@@ -19,14 +20,26 @@ def index(request):
 
 
 # 改成通用视图，解决冗余问题
+# 通用视图分为ListView，DetailView和TemplateView
+# TemplateView一般只用在需要返回模板的时候
+# ListView相当于默认model.objects.all()，取出某个类的所有数据丢给模板，一般需要自己重写获取数据方法
+# DetailView一般用来获取详细信息，比如ListView获取一个列表，然后DetailView得到列表里的某一项的详细信息
 class IndexView(generic.ListView):
+    # 这两个也是固定操作
+    # 指定模板和指定上下文变量
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
 
+    # 重写了通用视图中获取数据的方法，默认获取方法是制定model变量后自动获取比如去掉下面的方法再加上model=Quetion
+    # 重写的是MultipleObjectMixin里的方法
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+        # return Question.objects.order_by('-pub_date')[:5]
         # -pub_date和pub_date区别是前者是desc从大到小后者是asc从小到大
+
+        # 改进：和timezone.now()进行比较来检查日期，pub_date小于等于当前时间
+        # 顺序是这样的，先filter找到pub_date小于当前时间的然后全拿出来，在根据pub_date从大到小拍个序并拿出前五条
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 
 
 '''
