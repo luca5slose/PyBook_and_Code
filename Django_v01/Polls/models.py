@@ -11,8 +11,11 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
+    # 返回一个发布时间pub_date和最近一天的日期比较，如果是最近一天则返回True
     def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
+        # 一天前 < 发布时间 < 现在（最近一天）
 
 
 class Choice(models.Model):
