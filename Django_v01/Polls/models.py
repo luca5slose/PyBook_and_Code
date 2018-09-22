@@ -16,6 +16,10 @@ class Question(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
         # 一天前 < 发布时间 < 现在（最近一天）
+    was_published_recently.admin_order_field = 'pub_date'
+    was_published_recently.boolean = True
+    was_published_recently.short_description = 'Published recently?'
+    # 改成这样就能排序了，1/0
 
 
 class Choice(models.Model):
